@@ -13,6 +13,8 @@ def load_to_mysql(df: pd.DataFrame):
         database=os.getenv("DB_NAME")
     )
     cursor = conn.cursor()
+    df["Date"] = df["Date"].astype(str).str[:10]      # '2026-10-01'
+    df = df.astype(object).where(df.notna(), None)
 
     insert_query = """
         INSERT INTO stock_prices (date, ticker, open_price, high_price, low_price, close_price, volume, daily_change_pct, ma_7)
