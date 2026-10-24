@@ -1,8 +1,8 @@
 from datetime import timedelta
 
 import pendulum
-from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow import DAG   # type: ignore
+from airflow.operators.bash import BashOperator   # type: ignore
 
 # docker-compose.yml mein poora project yahin mount hota hai
 PROJECT_DIR = "/opt/airflow/project"
