@@ -22,8 +22,8 @@ def load_to_mysql(df: pd.DataFrame):
         ON DUPLICATE KEY UPDATE
             close_price = VALUES(close_price),
             volume = VALUES(volume),
-            daily_change_pct = VALUES(daily_change_pct),
-            ma_7 = VALUES(ma_7)
+            daily_change_pct = COALESCE(VALUES(daily_change_pct), daily_change_pct),
+            ma_7 = COALESCE(VALUES(ma_7), ma_7)
     """
 
     for _, row in df.iterrows():
@@ -34,12 +34,12 @@ def load_to_mysql(df: pd.DataFrame):
         ))
 
     conn.commit()
-    print(f"{cursor.rowcount} rows affected in last operation.")
+    cursor.execute("SELECT COUNT(*) FROM stock_prices")
+    print(f"Total rows in table now: {cursor.fetchone()[0]}")
     cursor.close()
     conn.close()
-    print(f"Total {len(df)} rows processed and loaded into MySQL successfully!")
+    print(f"{len(df)} rows processed and loaded into MySQL successfully!")
 
 if __name__ == "__main__":
     df = pd.read_csv("data/processed/stock_data_clean.csv")
     load_to_mysql(df)
-    

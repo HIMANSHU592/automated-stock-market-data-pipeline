@@ -1,0 +1,21 @@
+services:
+  airflow:
+    image: apache/airflow:2.10.5
+    container_name: stock_airflow
+    command: standalone
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./config/.env
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/dags
+      _PIP_ADDITIONAL_REQUIREMENTS: "yfinance pandas mysql-connector-python python-dotenv"
+    volumes:
+      # poora project mount hota hai, taaki scripts/, data/, config/ sab container ko dikhe
+      - ./:/opt/airflow/project
+    extra_hosts:
+      # container se Windows par chal rahe MySQL tak pahunchne ke liye
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+ 
