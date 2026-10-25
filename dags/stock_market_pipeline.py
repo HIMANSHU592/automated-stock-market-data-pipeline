@@ -7,13 +7,11 @@ from airflow.operators.bash import BashOperator   # type: ignore
 # docker-compose.yml mein poora project yahin mount hota hai
 PROJECT_DIR = "/opt/airflow/project"
 
-# Container ke andar "localhost" ka matlab container khud hai, Windows nahi.
-# Isliye MySQL host override karte hain. Baaki DB_* values config/.env se aati hain.
 ENV = {"DB_HOST": "host.docker.internal"}
 
 default_args = {
     "owner": "himanshu",
-    "retries": 2,                         # yfinance kabhi-kabhi fail hota hai
+    "retries": 2,                        
     "retry_delay": timedelta(minutes=5),
 }
 
