@@ -2,7 +2,6 @@ import pandas as pd
 import mysql.connector
 from dotenv import load_dotenv
 import os
-
 load_dotenv(dotenv_path="config/.env")
 
 def load_to_mysql(df: pd.DataFrame):

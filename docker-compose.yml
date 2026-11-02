@@ -8,6 +8,7 @@ services:
     env_file:
       - ./config/.env
     environment:
+      DB_HOST: host.docker.internal
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/project/dags
       _PIP_ADDITIONAL_REQUIREMENTS: "yfinance pandas mysql-connector-python python-dotenv"
@@ -18,4 +19,3 @@ services:
       # container se Windows par chal rahe MySQL tak pahunchne ke liye
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
- 
